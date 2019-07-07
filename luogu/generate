@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#This script is designed to help the debugging of luogu.org's program
+#By william Xu
+function showhelp(){
+    echo "This script is designed to help the debugging of luogu.org\'s program"
+    echo "Usage: generate arg1:[0000-9999]"
+    echo "Use generate --help to show this info"
+}
+
+if [ $1 == '--help' ];then
+    showhelp
+else
+    valid=`echo $1 | grep [0-9][0-9][0-9][0-9]`
+    if [ -n "$valid" ] ;then
+        mkdir P$1 
+        cp ./lib/compile ./P$1
+    else
+        echo Incorrect number \'$1\'
+    fi  
+fi
