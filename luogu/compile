@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+function ccompile(){
+if [ "$2" == "math" ];then
+    gcc -o default.o default.c -lm
+else
+    gcc -o default.o default.c
+fi
+}
+
+function need_spec(){
+if [ "$1" == "cpp" ];then
+    g++ -o default.o default.cpp
+    #echo flag2
+elif [ "$1" == "c" ];then
+    ccompile
+else 
+    echo "compile C or CPP?"
+fi
+}
+
+judcpp=`ls default.cpp 2> /dev/null`
+judc=`ls default.c 2> /dev/null`
+#echo $judcpp $judc
+
+if [ -n "$judcpp" ];then
+    if [ -z "$judc" ];then
+        g++ -o default.o default.cpp
+        echo flag1
+    else
+        need_spec
+    fi
+elif [ -z "$judcpp" ];then
+    if [ -n "$judc" ];then
+        ccompile
+    else 
+        echo "Fatal Error:No C/CPP source file!"
+    fi
+fi
